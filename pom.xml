@@ -58,7 +58,7 @@
     <org.exoplatform.forum.version>4.1.x-forum-xwiki-upgrade-SNAPSHOT</org.exoplatform.forum.version>
     <org.exoplatform.wiki.version>4.1.x-wiki-xwiki-upgrade-SNAPSHOT</org.exoplatform.wiki.version>
     <org.exoplatform.calendar.version>4.1.x-cal-xwiki-upgrade-SNAPSHOT</org.exoplatform.calendar.version>
-    <org.exoplatform.integ.version>4.1.integ-xwiki-upgrade-SNAPSHOT</org.exoplatform.integ.version>
+    <org.exoplatform.integ.version>4.1.x-integ-xwiki-upgrade-SNAPSHOT</org.exoplatform.integ.version>
     <org.exoplatform.platform-ui.version>4.1.0-SNAPSHOT</org.exoplatform.platform-ui.version>
   </properties>
   <dependencyManagement>
