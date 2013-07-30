@@ -629,7 +629,7 @@
       <!-- We enforce it to have the good version in our packaging -->
       <dependency>
         <groupId>org.exoplatform.kernel</groupId>
-        <artifactId>exo.kernel.component.ext.cache.impl.jboss.v3</artifactId>
+        <artifactId>exo.kernel.component.ext.cache.impl.infinispan.v5</artifactId>
         <version>${org.exoplatform.kernel.version}</version>
       </dependency>
       <!-- TO BE MOVED IN DEPMGT POM -->

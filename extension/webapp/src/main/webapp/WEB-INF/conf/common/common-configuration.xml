@@ -211,14 +211,32 @@
          <description>add Exo Cache Creator</description>
          <init-params>
             <object-param>
-               <name>LRU</name>
-               <description>The LRU cache creator</description>
-               <object type="org.exoplatform.services.cache.impl.jboss.lru.LRUExoCacheCreator"></object>
-            </object-param>
-            <object-param>
-               <name>EA</name>
-               <description>The EA cache creator</description>
-               <object type="org.exoplatform.services.cache.impl.jboss.ea.EAExoCacheCreator"></object>
+               <name>GENERIC</name>
+               <description>The generic cache creator</description>
+               <object type="org.exoplatform.services.cache.impl.infinispan.generic.GenericExoCacheCreator">
+                  <field name="implementations">
+                     <collection type="java.util.HashSet">
+                        <value>
+                           <string>NONE</string>
+                        </value>
+                        <value>
+                           <string>FIFO</string>
+                        </value>
+                        <value>
+                           <string>LRU</string>
+                        </value>
+                        <value>
+                           <string>UNORDERED</string>
+                        </value>
+                        <value>
+                           <string>LIRS</string>
+                        </value>
+                     </collection>
+                  </field>
+                  <field name="defaultStrategy"><string>LRU</string></field>
+                  <field name="defaultMaxIdle"><long>-1</long></field>
+                  <field name="defaultWakeUpInterval"><long>500</long></field>
+               </object>
             </object-param>
          </init-params>
       </component-plugin>
