@@ -29,7 +29,7 @@
             <name>infinispan-configuration</name>
             <value>jar:/conf/distributed-cache-configuration.xml</value>
          </value-param>
-         <properties-param>
+         <properties-param profiles="cluster,cluster-index-local">
             <name>parameters</name>
             <description>The parameters of the configuration</description>
             <property name="configurationFile" value="${gatein.jcr.jgroups.config}"></property>
