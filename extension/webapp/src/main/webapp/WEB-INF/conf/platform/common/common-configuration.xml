@@ -22,14 +22,14 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
   xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
-   <component>
+   <component profiles="cluster,cluster-index-local">
       <type>org.exoplatform.services.ispn.DistributedCacheManager</type>
       <init-params>
          <value-param>
             <name>infinispan-configuration</name>
             <value>jar:/conf/distributed-cache-configuration.xml</value>
          </value-param>
-         <properties-param profiles="cluster,cluster-index-local">
+         <properties-param>
             <name>parameters</name>
             <description>The parameters of the configuration</description>
             <property name="configurationFile" value="${gatein.jcr.jgroups.config}"></property>
