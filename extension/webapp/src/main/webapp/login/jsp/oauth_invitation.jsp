@@ -24,6 +24,11 @@
 <%@ page import="org.exoplatform.portal.resource.SkinService"%>
 <%@ page import="java.util.ResourceBundle"%>
 <%@ page import="org.exoplatform.services.organization.User"%>
+<%@ page import="java.util.Collection" %>
+<%@ page import="org.exoplatform.portal.resource.SkinConfig" %>
+<%@ page import="org.exoplatform.portal.resource.SkinVisitor" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="org.exoplatform.portal.resource.SkinKey" %>
 <%@ page language="java" %>
 <%
     PortalContainer portalContainer = PortalContainer.getCurrentInstance(session.getServletContext());
@@ -33,6 +38,8 @@
 
     SkinService skinService = PortalContainer.getCurrentInstance(session.getServletContext())
             .getComponentInstanceOfType(SkinService.class);
+
+    Collection<SkinConfig> skins = skinService.getPortalSkins("Default");
     String loginCssPath = skinService.getSkin("portal/login", "Default").getCSSPath();
 
     User detectedUser = (User)request.getAttribute("detectedUser");
@@ -48,8 +55,11 @@
         <title>Oauth invitation</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="shortcut icon" type="image/x-icon"  href="<%=contextPath%>/favicon.ico" />
-        <link href="/eXoSkin/skin/css/Core.css" rel="stylesheet" type="text/css"/>
-        <link href="/eXoSkin/skin/css/sub-core.css" rel="stylesheet" type="text/css"/>
+        <% for (SkinConfig skin : skins) {
+            if ("CoreSkin".equals(skin.getModule()) || "CoreSkin1".equals(skin.getModule())) {%>
+                <link href="<%=skin.getCSSPath()%>" rel="stylesheet" type="text/css" test="<%=skin.getModule()%>"/>
+            <%}%>
+        <%}%>
         <link href="<%=loginCssPath%>" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="/platform-extension/javascript/jquery-1.7.1.js"></script>
         <script type="text/javascript" src="/platform-extension/javascript/switch-button.js"></script>
@@ -60,7 +70,7 @@
             <div class="uiContentBox">
                 <form name="registerForm" action="<%= contextPath + "/login"%>" method="post" style="margin: 0px;">
                     <div class="content">
-                        <p><%=res.getString("UIOAuthInvitationForm.message.detectedUser")%><br/><strong><%= detectedUser.getEmail() %></strong></p>
+                        <p><%=res.getString("UIOAuthInvitationForm.message.detectedUser")%><br/><strong><%=detectedUser.getUserName()%>/<%= detectedUser.getEmail() %></strong></p>
                         <p><%=res.getString("UIOAuthInvitationForm.message.inviteMessage")%></p>
                         <% if (error != null) { %>
                         <p class="error"><%=error%></p>

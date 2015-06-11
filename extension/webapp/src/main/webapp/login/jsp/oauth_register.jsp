@@ -29,6 +29,8 @@
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.HashSet" %>
+<%@ page import="org.exoplatform.portal.resource.SkinConfig" %>
+<%@ page import="java.util.Collection" %>
 <%@ page language="java" %>
 <%
     PortalContainer portalContainer = PortalContainer.getCurrentInstance(session.getServletContext());
@@ -38,6 +40,8 @@
 
     SkinService skinService = PortalContainer.getCurrentInstance(session.getServletContext())
             .getComponentInstanceOfType(SkinService.class);
+
+    Collection<SkinConfig> skins = skinService.getPortalSkins("Default");
     String loginCssPath = skinService.getSkin("portal/login", "Default").getCSSPath();
 
     User user = (User)request.getAttribute("portalUser");
@@ -64,8 +68,11 @@
         <title>Oauth register</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="shortcut icon" type="image/x-icon"  href="<%=contextPath%>/favicon.ico" />
-        <link href="/eXoSkin/skin/css/Core.css" rel="stylesheet" type="text/css"/>
-        <link href="/eXoSkin/skin/css/sub-core.css" rel="stylesheet" type="text/css"/>
+        <% for (SkinConfig skin : skins) {
+            if ("CoreSkin".equals(skin.getModule()) || "CoreSkin1".equals(skin.getModule())) {%>
+                <link href="<%=skin.getCSSPath()%>" rel="stylesheet" type="text/css" test="<%=skin.getModule()%>"/>
+            <%}%>
+        <%}%>
         <link href="<%=loginCssPath%>" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="/platform-extension/javascript/jquery-1.7.1.js"></script>
         <script type="text/javascript" src="/platform-extension/javascript/switch-button.js"></script>
