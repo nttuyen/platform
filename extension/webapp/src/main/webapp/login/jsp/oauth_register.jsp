@@ -53,6 +53,7 @@
     if (errorFields == null) {
         errorFields = new HashSet<String>();
     }
+    String errorClass = "error";
 
     response.setCharacterEncoding("UTF-8");
     response.setContentType("text/html; charset=UTF-8");
@@ -68,99 +69,76 @@
         <link href="<%=loginCssPath%>" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="/platform-extension/javascript/jquery-1.7.1.js"></script>
         <script type="text/javascript" src="/platform-extension/javascript/switch-button.js"></script>
-
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var startlabelfooter = jQuery("#platformInfoDiv").data("labelfooter");
-                var htmlContent = startlabelfooter +" eXo Platform ";
-                var divContent = jQuery("#platformInfoDiv");
-                var requestJsonPlatformInfo = jQuery.ajax({ type: "GET", url: "/portal/rest/platform/info", async: false, dataType: 'json' });
-                if(requestJsonPlatformInfo.readyState == 4 && requestJsonPlatformInfo.status == 200){
-                    //readyState 4: request finished and response is ready
-                    //status 200: "OK"
-                    var myresponseText = requestJsonPlatformInfo.responseText;
-                    var jsonPlatformInfo = jQuery.parseJSON(myresponseText);
-                    htmlContent += "v"
-                    htmlContent += jsonPlatformInfo.platformVersion;
-                    htmlContent += " - build "
-                    htmlContent += jsonPlatformInfo.platformBuildNumber;
-                }else{
-                    htmlContent += "4.0"
-                }
-                divContent.text(htmlContent);
-            });
-        </script>
     </head>
     <body>
-        <!--
-        <% if (errors != null && errors.size() > 0) { %>
-            <i class="uiIconError"></i>
-            <ul>
-                <% for(String s : errors) {%>
-                    <li><%=s%></li>
-                <% } %>
-            </ul>
-        <%}%>
-        -->
         <div class="uiFormWithTitle uiBox uiOauthRegister">
-            <h5 class="title">Register new account</h5>
+            <h5 class="title"><%=res.getString("UIRegisterForm.title")%></h5>
             <div class="uiContentBox">
-                <div class="content">
-                    <form name="registerForm" action="<%= contextPath + "/login"%>" method="post" style="margin: 0px;">
+                <% if (errors.size() > 0) { %>
+                <div class="error">
+                    <ul>
+                        <% for (String error : errors) { %>
+                        <li><%=error%></li>
+                        <%}%>
+                    </ul>
+                </div>
+                <%}%>
+                <form name="registerForm" action="<%= contextPath + "/login"%>" method="post" style="margin: 0px;">
+                    <div class="content">
                         <div class="form-horizontal">
                             <div class="control-group">
-                                <label class="control-label">User Name:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.username")%></label>
                                 <div class="controls">
-                                    <input class="username" name="username" type="text" value="<%=(user.getUserName() == null ? "" : user.getUserName())%>" placeholder="<%=res.getString("portal.login.Username")%>" onblur="this.placeholder = '<%=res.getString("portal.login.Username.blur")%>'" onfocus="this.placeholder = ''"/>
+                                    <input class="username <%if(errorFields.contains("username")) out.print(errorClass);%>" name="username" type="text" value="<%=(user.getUserName() == null ? "" : user.getUserName())%>" />
                                 </div>
                             </div>
 
                             <div class="control-group">
-                                <label class="control-label">Password:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.password")%></label>
                                 <div class="controls">
-                                    <input class="password" name="password" type="password" placeholder="<%=res.getString("portal.login.Password")%>" onblur="this.placeholder = '<%=res.getString("portal.login.Password")%>'" onfocus="this.placeholder = ''"/>
+                                    <input class="password <%if(errorFields.contains("password")) out.print(errorClass);%>" name="password" type="password" />
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Confirm Password:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.confirmPassword")%></label>
                                 <div class="controls">
-                                    <input class="password" name="password2" type="password" placeholder="Re enter your password" />
+                                    <input class="password <%if(errorFields.contains("password2")) out.print(errorClass);%>" name="password2" type="password" />
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">First Name:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.firstName")%></label>
                                 <div class="controls">
-                                    <input type="text" name="firstName" value="<%=(user.getFirstName() == null ? "" : user.getFirstName())%>" placeholder="First Name"/>
+                                    <input type="text" class="<%if(errorFields.contains("firstName")) out.print(errorClass);%>" name="firstName" value="<%=(user.getFirstName() == null ? "" : user.getFirstName())%>"/>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Las Name:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.lastName")%></label>
                                 <div class="controls">
-                                    <input type="text" name="lastName" value="<%=(user.getLastName() == null ? "" : user.getLastName())%>" placeholder="Last Name"/>
+                                    <input type="text" class="<%if(errorFields.contains("lastName")) out.print(errorClass);%>" name="lastName" value="<%=(user.getLastName() == null ? "" : user.getLastName())%>"/>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Display Name:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.displayName")%></label>
                                 <div class="controls">
-                                    <input type="text" name="displayName" value="<%=(user.getDisplayName() == null ? "" : user.getDisplayName())%>" placeholder="Display name"/>
+                                    <input type="text" class="<%if(errorFields.contains("displayName")) out.print(errorClass);%>" name="displayName" value="<%=(user.getDisplayName() == null ? "" : user.getDisplayName())%>"/>
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Email:</label>
+                                <label class="control-label"><%=res.getString("UIRegisterForm.label.emailAddress")%></label>
                                 <div class="controls">
-                                    <input type="email" name="email" value="<%=(user.getEmail() == null ? "" : user.getEmail())%>" placeholder="Email address" />
+                                    <input type="email" class="<%if(errorFields.contains("email")) out.print(errorClass);%>" name="email" value="<%=(user.getEmail() == null ? "" : user.getEmail())%>" />
                                 </div>
                             </div>
 
-                            <input type="hidden" name="oauth_do_register_new" value="1"/>
+                            <input type="hidden" name="login_controller" value="submit_register"/>
                         </div>
-                    </form>
-                </div>
-                <div id="UIPortalLoginFormAction" class="uiAction">
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                    <button type="reset" class="btn ActionButton LightBlueStyle">Reset</button>
-                    <a class="btn ActionButton LightBlueStyle" href="<%= contextPath + "/login?cancel_oauth=1"%>">Cancel</a>
-                </div>
+                    </div>
+                    <div id="UIPortalLoginFormAction" class="uiAction">
+                        <button type="submit" class="btn btn-primary"><%=res.getString("UIRegisterForm.action.SubscribeOAuth")%></button>
+                        <button type="reset" class="btn ActionButton LightBlueStyle"><%=res.getString("UIRegisterForm.action.Reset")%></button>
+                        <a class="btn ActionButton LightBlueStyle" href="<%= contextPath + "/login?login_controller=oauth_cancel"%>"><%=res.getString("UIRegisterForm.action.Cancel")%></a>
+                    </div>
+                </form>
             </div>
         </div>
     </body>

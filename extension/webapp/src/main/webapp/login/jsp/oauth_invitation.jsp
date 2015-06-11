@@ -53,50 +53,32 @@
         <link href="<%=loginCssPath%>" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" src="/platform-extension/javascript/jquery-1.7.1.js"></script>
         <script type="text/javascript" src="/platform-extension/javascript/switch-button.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var startlabelfooter = jQuery("#platformInfoDiv").data("labelfooter");
-                var htmlContent = startlabelfooter +" eXo Platform ";
-                var divContent = jQuery("#platformInfoDiv");
-                var requestJsonPlatformInfo = jQuery.ajax({ type: "GET", url: "/portal/rest/platform/info", async: false, dataType: 'json' });
-                if(requestJsonPlatformInfo.readyState == 4 && requestJsonPlatformInfo.status == 200){
-                    //readyState 4: request finished and response is ready
-                    //status 200: "OK"
-                    var myresponseText = requestJsonPlatformInfo.responseText;
-                    var jsonPlatformInfo = jQuery.parseJSON(myresponseText);
-                    htmlContent += "v"
-                    htmlContent += jsonPlatformInfo.platformVersion;
-                    htmlContent += " - build "
-                    htmlContent += jsonPlatformInfo.platformBuildNumber;
-                }else{
-                    htmlContent += "4.0"
-                }
-                divContent.text(htmlContent);
-            });
-        </script>
     </head>
     <body>
         <div class="uiFormWithTitle uiBox uiOauthInvitation">
             <h5 class="title"><%= res.getString("UIOAuthInvitationForm.title") %></h5>
             <div class="uiContentBox">
-                <div class="content">
-                    <p><%=res.getString("UIOAuthInvitationForm.message.detectedUser")%><br/><strong><%= detectedUser.getEmail() %></strong></p>
-                    <p><%=res.getString("UIOAuthInvitationForm.message.inviteMessage")%></p>
-                        <form name="registerForm" action="<%= contextPath + "/login"%>" method="post" style="margin: 0px;">
-                            <p class="clearfix">
-                                <label>eXo Password:</label>
-                                <span class="pull-right">
-                                    <input class="password <%=(error != null ? "error" : "")%>" type="password" name="password" placeholder="<%=res.getString("portal.login.Password")%>" onblur="this.placeholder = '<%=res.getString("portal.login.Password")%>'" onfocus="this.placeholder = ''"/>
-                                </span>
-                                <input type="hidden" name="confirm_existing_account" value="1"/>
-                            </p>
-                        </form>
-                </div>
-                <div class="uiAction uiActionBorder">
-                    <button type="submit" class="btn btn-primary" tabindex="4">Confirm</button>
-                    <a class="btn ActionButton LightBlueStyle" href="<%= contextPath + "/login?create_new_account=1"%>">Create new account</a>
-                    <a class="btn ActionButton LightBlueStyle" href="<%= contextPath + "/login?cancel_oauth=1"%>">Cancel</a>
-                </div>
+                <form name="registerForm" action="<%= contextPath + "/login"%>" method="post" style="margin: 0px;">
+                    <div class="content">
+                        <p><%=res.getString("UIOAuthInvitationForm.message.detectedUser")%><br/><strong><%= detectedUser.getEmail() %></strong></p>
+                        <p><%=res.getString("UIOAuthInvitationForm.message.inviteMessage")%></p>
+                        <% if (error != null) { %>
+                        <p class="error"><%=error%></p>
+                        <%}%>
+                        <p class="clearfix">
+                            <label><%=res.getString("UIOAuthInvitationForm.label.password")%></label>
+                            <span class="pull-right">
+                                <input class="password <%=(error != null ? "error" : "")%>" type="password" name="password" placeholder="<%=res.getString("portal.login.Password")%>" onblur="this.placeholder = '<%=res.getString("portal.login.Password")%>'" onfocus="this.placeholder = ''"/>
+                            </span>
+                            <input type="hidden" name="login_controller" value="confirm_account"/>
+                        </p>
+                    </div>
+                    <div class="uiAction uiActionBorder">
+                        <button type="submit" class="btn btn-primary"><%=res.getString("portal.login.Confirm")%></button>
+                        <a class="btn ActionButton LightBlueStyle" href="<%= contextPath + "/login?login_controller=register"%>"><%=res.getString("portal.login.CreateNewAccount")%></a>
+                        <a class="btn ActionButton LightBlueStyle" href="<%= contextPath + "/login?login_controller=oauth_cancel"%>"><%=res.getString("portal.login.cancel")%></a>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
