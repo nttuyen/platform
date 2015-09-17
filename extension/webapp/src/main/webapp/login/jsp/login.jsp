@@ -34,7 +34,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="org.exoplatform.web.controller.QualifiedName" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="org.exoplatform.forgotpassword.handler.ForgotPasswordHandler" %>
+<%@ page import="org.gatein.forgetpassword.handler.ForgetPasswordHandler" %>
 <%@ page language="java" %>
 <%
   String contextPath = request.getContextPath() ;
@@ -64,7 +64,7 @@
 
   Router router = webAppController.getRouter();
   Map<QualifiedName, String> params = new HashMap<QualifiedName, String>();
-  params.put(WebAppController.HANDLER_PARAM, ForgotPasswordHandler.NAME);
+  params.put(WebAppController.HANDLER_PARAM, ForgetPasswordHandler.NAME);
   String forgotPasswordPath = router.render(params);
 
   //
@@ -169,7 +169,7 @@
                     });
                 </script>
                 <div>
-                    <a href="<%= contextPath + forgotPasswordPath %>" title="<%=res.getString("exo.forgotPassword.loginLinkTitle")%>"><%=res.getString("exo.forgotPassword.loginLinkTitle")%></a>
+                    <a href="<%= contextPath + forgotPasswordPath %>" title="<%=res.getString("gatein.forgotPassword.loginLinkTitle")%>"><%=res.getString("gatein.forgotPassword.loginLinkTitle")%></a>
                 </div>
 				<div id="UIPortalLoginFormAction" class="loginButton">
 					<button class="button" tabindex="4"  onclick="login();"><%=res.getString("portal.login.Signin")%></button>

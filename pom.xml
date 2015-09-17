@@ -535,8 +535,13 @@
       </dependency>
 
       <dependency>
+        <groupId>org.gatein.portal</groupId>
+        <artifactId>exo.portal.web.forgetPassword</artifactId>
+        <version>${org.gatein.portal.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.exoplatform.platform</groupId>
-        <artifactId>platform-component-forgot-password</artifactId>
+        <artifactId>platform-component-forget-password</artifactId>
         <version>${project.version}</version>
       </dependency>
 

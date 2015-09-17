@@ -23,17 +23,4 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_2.xsd http://www.exoplaform.org/xml/ns/kernel_1_2.xsd"
                xmlns="http://www.exoplaform.org/xml/ns/kernel_1_2.xsd">
-
-  <component>
-    <type>org.exoplatform.forgotpassword.service.ForgotPasswordService</type>
-  </component>
-
-  <external-component-plugins>
-    <target-component>org.exoplatform.web.WebAppController</target-component>
-    <component-plugin>
-      <name>ForgotPasswordHandler</name>
-      <set-method>register</set-method>
-      <type>org.exoplatform.forgotpassword.handler.ForgotPasswordHandler</type>
-    </component-plugin>
-  </external-component-plugins>
 </configuration>
