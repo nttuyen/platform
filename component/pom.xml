@@ -19,5 +19,6 @@
     <module>jmxclient</module>
     <module>uxpnavigation</module>
     <module>oauth-auth</module>
+    <module>forgot-password</module>
   </modules>
 </project>

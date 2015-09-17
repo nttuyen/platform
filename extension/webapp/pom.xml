@@ -274,6 +274,10 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>org.exoplatform.platform</groupId>
+      <artifactId>platform-component-forgot-password</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.exoplatform.social</groupId>
       <artifactId>social-component-webui</artifactId>
       <scope>runtime</scope>
